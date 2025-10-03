@@ -1,67 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>2012 Jr Eagles Hockey Profile</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <title>2012 Jr Eagles – Tier 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; line-height: 1.5; }
+    header, main, footer { padding: 1rem; }
+    header { background: #004; color: white; }
+    .stats, .schedule { margin-top: 2rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #aaa; padding: 0.5rem; text-align: left; }
+    .loading { color: #777; font-style: italic; }
+  </style>
 </head>
 <body>
-  <header class="site-header">
+  <header>
     <h1>2012 Jr Eagles – Tier 1</h1>
     <p>Tracking wins, losses, stats, schedule & more</p>
   </header>
+  <main>
+    <section class="stats">
+      <h2>Wins / Losses</h2>
+      <p>Wins: <span id="wins">0</span></p>
+      <p>Losses: <span id="losses">0</span></p>
+    </section>
 
-  <section class="record">
-    <div class="record-box">
-      <h2>Wins</h2>
-      <div id="wins">0</div>
-    </div>
-    <div class="record-box">
-      <h2>Losses</h2>
-      <div id="losses">0</div>
-    </div>
-  </section>
+    <section class="schedule">
+      <h2>Full Game Schedule</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Opponent</th><th>Location</th><th>Score</th></tr>
+        </thead>
+        <tbody id="schedule-body">
+          <tr><td colspan="4" class="loading">Loading schedule...</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-  <section class="schedule">
-    <h2>Full Game Schedule</h2>
-    <table id="schedule-table">
-      <thead>
-        <tr>
-          <th>Date</th><th>Opponent</th><th>Location</th><th>Score (Eagles-Opp)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Rows inserted by JS -->
-      </tbody>
-    </table>
-  </section>
+    <section class="player-stats">
+      <h2>Player Stats & Goaltending</h2>
+      <p id="player-stats-text">Loading stats...</p>
+    </section>
 
-  <section class="stats">
-    <h2>Player Stats & Goaltending</h2>
-    <table id="player-stats">
-      <thead>
-        <tr>
-          <th>Player</th><th>Goals</th><th>Assists</th><th>+ / –</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <div class="goalie-saves">
-      <strong>Total Saves:</strong> <span id="total-saves">0</span>
-    </div>
-  </section>
+    <section class="fact-of-day">
+      <h2>Hockey Fact of the Day</h2>
+      <p id="fact">Loading fact...</p>
+    </section>
+  </main>
 
-  <section class="fact-of-day">
-    <h2>Hockey Fact of the Day</h2>
-    <div id="fact-content">Loading fact...</div>
-  </section>
-
-  <footer class="site-footer">
+  <footer>
     <p>Data powered by Eastern Hockey Federation / fedhockey.com</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script>
+    // Example: simulate fetching fact
+    function loadFact() {
+      // Replace this with real fetch from API
+      return new Promise((resolve) => {
+        setTimeout(() => resolve("The Stanley Cup was first awarded in 1893."), 1000);
+      });
+    }
+
+    function init() {
+      const factEl = document.getElementById("fact");
+      factEl.textContent = "Loading fact...";
+      loadFact()
+        .then(f => {
+          factEl.textContent = f;
+        })
+        .catch(err => {
+          factEl.textContent = "Could not load fact.";
+          console.error("Fact load error:", err);
+        });
+      
+      // Similarly, fetch schedule, stats, wins/losses, etc.
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
 </body>
 </html>
- 
